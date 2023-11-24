@@ -15,7 +15,7 @@ makedepends="bison findutils flex installkernel openssl-dev perl"
 
 _repo="linux"
 _config="config-$_flavor.$arch"
-_commit="da3923152ccb5848bd6baee2287e2dba2d906250"
+_commit="c5a1f46c5dab624ff9239c908e6ee069af1785a3"
 
 # Source
 source="
@@ -54,6 +54,6 @@ package() {
 }
 
 sha512sums="
-5ebad104eb439fbebe3a650b0301fa2891f49132b2dd7056cd96ba5a8d96b4e9c12cf47ec84f7771eda15defb89dea75e8fb859c8ed63ed45a9f5b8372cae7a7  sm8150-mainline-dc202bcec016a3abcc39a685bcab234d2b14c6a8.tar.gz
-2b2cb3fcaf8262dcb4498dfe8070832cf7c69711d10b196eb4493d7a6adcdb3ff8c6181d0233b8a99a3adbd4986b1a4caa259af45d5bd9b9e945495f023d8af1  config-postmarketos-qcom-sm8150-nabu.aarch64
+25610d51d20a87a688337430f8cec87395b974c89a990b6595ab5e1754ac1d83303b121bbc5b943903e722f08b55dd8b31777ef0da3c7661295d7bed54a38621  linux-c5a1f46c5dab624ff9239c908e6ee069af1785a3.tar.gz
+8cce6b11d58c77f0d5222097aacf92415bcd7d8ec8186ff478ce31bcda0bbdfea9bc43b7a6d794d61fce055116fee8f023592c247f0662cfecd5bb9a74efcc30  config-postmarketos-qcom-sm8250-pipa.aarch64
 "

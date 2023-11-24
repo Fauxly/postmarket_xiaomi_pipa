@@ -1,30 +1,27 @@
 # Reference: <https://postmarketos.org/devicepkg>
 pkgname=device-xiaomi-pipa
-pkgdesc="Xiaomi Mi Pad 6"
-pkgver=0.7
-pkgrel=2
+pkgdesc="Xiaomi Pad 6"
+pkgver=0.1
+pkgrel=0
 url="https://postmarketos.org"
 license="MIT"
 arch="aarch64"
 options="!check !archcheck"
 depends="
-	alsa-ucm-conf-xiaomi-pipa
+	linux-postmarketos-qcom-sm8250-pipa
 	make-dynpart-mappings
-	mesa-vulkan-freedreno
+	mesa-dri-gallium
 	mkbootimg
 	postmarketos-base
-	postmarketos-update-kernel
-	qbootctl
-	swclock-offset
 "
 makedepends="devicepkg-dev"
-install="$pkgname.post-install $pkgname.post-upgrade"
-source="deviceinfo modules-initfs"
+source="
+	deviceinfo
+	30-gpu-firmware.files
+"
 
 subpackages="
-	$pkgname-kernel-boe:kernel_boe
-	$pkgname-kernel-csot:kernel_csot
-	$pkgname-nonfree-firmware:nonfree_firmware
+	$pkgname-mainline-firmware:mainline_firmware
 "
 
 build() {
@@ -35,31 +32,29 @@ package() {
 	devicepkg_package $startdir $pkgname
 }
 
-kernel_boe() {
-	pkgdesc="BOE Panel. To know which panel your device use and the status of the port, Visit the Mi Pad 5 Pro wiki page: https://wiki.postmarketos.org/wiki/Xiaomi_Pad_6_(xiaomi-pipa)"
-	depends="linux-postmarketos-qcom-sm8250"
-	devicepkg_subpackage_kernel $startdir $pkgname $subpkgname
-}
+mainline_firmware() {
+	pkgdesc="Firmware support packages for mainline kernel"
+	depends="firmware-xiaomi-pipa-adreno"
+	install_if="linux-postmarketos-qcom-sm8250-pipa $pkgname-nonfree-firmware"
+	mkdir "$subpkgdir"
 
-kernel_csot() {
-	pkgdesc="CSOT Panel. To know which panel your device use and the status of the port, Visit the Mi Pad 5 Pro wiki page: https://wiki.postmarketos.org/wiki/Xiaomi_Pad_6_(xiaomi-pipa)"
-	depends="linux-postmarketos-qcom-sm8250"
-	devicepkg_subpackage_kernel $startdir $pkgname $subpkgname
+	install -Dm644 "$srcdir/30-gpu-firmware.files" \
+		"$subpkgdir/etc/postmarketos-mkinitfs/files/30-gpu-firmware.files"
 }
 
 nonfree_firmware() {
-	pkgdesc="Firmware for GPU, WiFi, etc."
+	pkgdesc="Firmware for GPU, Touschreen, Audio, Bluetooth, WiFi, etc."
 	depends="
 		firmware-xiaomi-pipa-adreno
 		firmware-xiaomi-pipa-touchscreen
 		pd-mapper
 		tqftpserv
 		"
-	install="$subpkgname.post-install $subpkgname.post-upgrade"
+	install="$subpkgname.post-install"
 	mkdir "$subpkgdir"
 }
 
 sha512sums="
-b1eae47e71f20658f716fe8873ed255a54f52f2102a57cbfeb3f42d2c4e40cc1a164035d7eaa3ebfa94ed75ef1362677de07035ce7c2f28c947e832e26e13d44  deviceinfo
-08429bea885350e34c4d7f7aec02e440080a78db3ac10d8a757012ffa5dcafe93a12db24e37201d02cd423db9c33cf0bafcd0c03935dfa159a2e89ccafe93f3e  modules-initfs
+6a5a4ed9e0224a30db7c7d30059997c44f62286a8511588f501af0e04513dba002bbbe5b83ddd810c7e3f7ca0bd83483a6abd0c8e9ad40572a117593ff1a4b67  deviceinfo
+b00cb2ec324901d99c9c9a5b5513c78c912881690fda037e0b41c98f849222d0c5929ebb990c12b42892c2b7d635660794b69cff809ab24c3794eeda00212c3f  30-gpu-firmware.files
 "
