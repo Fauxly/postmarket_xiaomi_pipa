@@ -1,4 +1,4 @@
-_flavor="postmarketos-qcom-sm8250-pipa"
+_flavor="linux-xiaomi-pipa"
 pkgname=linux-$_flavor
 pkgver=6.6.0
 pkgrel=1
