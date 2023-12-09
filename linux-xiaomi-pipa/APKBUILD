@@ -1,4 +1,4 @@
-_flavor="linux-xiaomi-pipa"
+_flavor="xiaomi-pipa"
 pkgname=linux-$_flavor
 pkgver=6.6.0
 pkgrel=1
