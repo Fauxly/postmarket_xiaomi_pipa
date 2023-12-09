@@ -8,7 +8,7 @@ license="MIT"
 arch="aarch64"
 options="!check !archcheck"
 depends="
-	linux-postmarketos-qcom-sm8250-pipa
+	linux-xiaomi-pipa
 	make-dynpart-mappings
 	mesa-dri-gallium
 	mkbootimg
@@ -35,7 +35,7 @@ package() {
 mainline_firmware() {
 	pkgdesc="Firmware support packages for mainline kernel"
 	depends="firmware-xiaomi-pipa-adreno"
-	install_if="linux-postmarketos-qcom-sm8250-pipa $pkgname-nonfree-firmware"
+	install_if="linux-xiaomi-pipa $pkgname-nonfree-firmware"
 	mkdir "$subpkgdir"
 
 	install -Dm644 "$srcdir/30-gpu-firmware.files" \
